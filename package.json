@@ -1,0 +1,55 @@
+{
+  "name": "react-boilerplate",
+  "version": "1.0.0",
+  "description": "Minimal setup for react with webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server --config ./config/webpack.dev.js",
+    "build-dev": "webpack --config ./config/webpack.dev.js",
+    "start": "webpack-dev-server --port $PORT --host 0.0.0.0 --config ./config/webpack.prod.js",
+    "build": "NODE_ENV=production && webpack --config ./config/webpack.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shenato/react-boilerplate.git"
+  },
+  "keywords": [
+    "Boilerplate",
+    "React",
+    "Webpack"
+  ],
+  "author": "Omar ElGaml",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-polyfill": "^6.26.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "css-loader": "^3.4.0",
+    "dotenv": "^7.0.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "file-loader": "^5.0.2",
+    "history": "^4.10.1",
+    "html-webpack-plugin": "^3.2.0",
+    "minireset.css": "0.0.4",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-lazyload": "^3.0.0",
+    "react-redux": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.4",
+    "style-loader": "^0.23.1",
+    "styled-components": "^4.4.1",
+    "svg-inline-loader": "^0.8.0",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0"
+  }
+}

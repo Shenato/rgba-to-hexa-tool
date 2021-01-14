@@ -1,0 +1,25 @@
+{
+  "include": ["./app/**/*"],
+  "exclude": ["node_modules", "build"],
+  "compilerOptions": {
+    "baseUrl": "app",
+    "module": "commonjs",
+    "target": "ES6",
+    "sourceMap": true,
+    "inlineSources": true,
+    "jsx": "react",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "paths": {
+      "Assets/*": ["./assets/*"],
+      "Components/*": ["./components/*"],
+      "Containers/*": ["./containers/*"],
+      "Pages/*": ["./pages/*"],
+      "Public/*": ["./public/*"],
+      "Services/*": ["./services/*"],
+      "Store/*": ["./store/*"],
+      "Styles/*": ["./styles/*"],
+      "Utils/*": ["./util/*"]
+    }
+  }
+}
