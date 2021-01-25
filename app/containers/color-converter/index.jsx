@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { RGBAStringToArray, rgbaToHexa } from 'Utils/colors';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { RGBAStringToArray, rgbaToHexa } from "Utils/colors";
 
 const Wrapper = styled.div`
   min-width: 300px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  flex-wrap: wrap;
   margin-top: 20%;
   background: ${({ theme }) => theme.shadeCanvas};
   width: 100%;
@@ -17,8 +18,8 @@ const Vertical = styled.div`
   flex-direction: column;
 `;
 const ColorConverter = ({}) => {
-  const [rgbValue, setrgbValue] = useState('rgba(0,0,0,0)');
-  const [hexaValue, sethexaValue] = useState('#00000000');
+  const [rgbValue, setrgbValue] = useState("rgba(0,0,0,0)");
+  const [hexaValue, sethexaValue] = useState("#00000000");
   const convert = () => {
     const colorValuesArray = RGBAStringToArray(rgbValue);
     console.log(colorValuesArray);
@@ -38,7 +39,7 @@ const ColorConverter = ({}) => {
             setrgbValue(e.target.value);
           }}
           onKeyDown={(event) => {
-            if (event.key === 'Enter') {
+            if (event.key === "Enter") {
               convert();
             }
           }}

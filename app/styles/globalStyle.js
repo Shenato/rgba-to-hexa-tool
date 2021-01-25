@@ -4,14 +4,15 @@ export default createGlobalStyle`
   * {
     box-sizing: border-box;
   }
-  body {
+  html, body {
     height: 100vh;
     width: 100vw;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
+  }
+  body {
     font-size: 16px;
     font-family: ${({ theme }) => theme.mainFont};
     color: ${({ theme }) => theme.textMain};
@@ -19,22 +20,22 @@ export default createGlobalStyle`
     font-feature-settings: 'kern', 'liga', 'clig', 'calt';
   }
   h1 {
-    font-size: 2rem;
+    font-size: 2rem !important;
   }
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.5rem !important;
   }
   h3 {
-    font-size: 1.25rem;
+    font-size: 1.25rem !important;
   }
   h4 {
-    font-size: 1rem;
+    font-size: 1rem !important;
   }
   h5 {
-    font-size: .875rem;
+    font-size: .875rem !important;
   }
   h6 {
-    font-size: .75rem;
+    font-size: .75rem !important;
   }
 
   
