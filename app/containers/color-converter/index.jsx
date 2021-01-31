@@ -1,11 +1,7 @@
-import Input from "Components/input";
-import React, { useContext, useEffect, useState } from "react";
-import styled, { createGlobalStyle, ThemeContext } from "styled-components";
-import {
-  RGBAStringToArray,
-  rgbaToHexa,
-  getCorrectTextColor,
-} from "Utils/colors";
+import Input from 'Components/input';
+import React, { useContext, useEffect, useState } from 'react';
+import styled, { createGlobalStyle, ThemeContext } from 'styled-components';
+import { RGBAStringToArray, rgbaToHexa, getCorrectTextColor } from 'Utils/colors';
 
 const Wrapper = styled.div`
   min-width: 300px;
@@ -14,7 +10,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: 20%;
+  margin-top: 10vh;
 
   width: 100%;
   padding: 2rem 0.5rem;
