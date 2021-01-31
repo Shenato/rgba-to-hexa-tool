@@ -35,6 +35,7 @@ function componentToHex(c) {
   const returnValue = hex.length == 1 ? '0' + hex : hex;
   return returnValue.toUpperCase();
 }
+
 let lastResult;
 export function getCorrectTextColor(hex) {
   if (!hex) {
@@ -72,7 +73,7 @@ export function getCorrectTextColor(hex) {
   function cutHex(h) {
     return h.charAt(0) == '#' ? h.substring(1, 9) : h;
   }
-  console.log(hAlpha);
+
   const cBrightness = (hRed * 299 + hGreen * 587 + hBlue * 114) / 1000;
   if (cBrightness > threshold || hAlpha < 0.8 * 255) {
     lastResult = theme.textDark;

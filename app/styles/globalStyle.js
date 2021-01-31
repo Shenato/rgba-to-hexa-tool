@@ -1,4 +1,4 @@
-const { createGlobalStyle } = require("styled-components");
+const { createGlobalStyle } = require('styled-components');
 
 export default createGlobalStyle`
   * {
@@ -18,6 +18,7 @@ export default createGlobalStyle`
     color: ${({ theme }) => theme.textMain};
     background: ${({ theme }) => theme.mainBackground};
     font-feature-settings: 'kern', 'liga', 'clig', 'calt';
+    transition: background 0.5s ease-in-out;
   }
   h1 {
     font-size: 2rem !important;

@@ -16,13 +16,6 @@ const Wrapper = styled.div`
   padding: 2rem 0.5rem;
 `;
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    background: ${({ background }) => background};
-    color: ${({ background }) => getCorrectTextColor(background)};
-  }
-`;
-
 const ColorConverter = ({ setMainBackground }) => {
   const themeContext = useContext(ThemeContext);
   const initialBackground = themeContext.mainCanvas;
@@ -62,7 +55,6 @@ const ColorConverter = ({ setMainBackground }) => {
           sethexaValue();
         }}
       />
-      <GlobalStyle background={hexaValue} />
     </Wrapper>
   );
 };
