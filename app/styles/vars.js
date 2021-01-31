@@ -1,9 +1,9 @@
 const theme = {
   mainColor: "rgb(107, 61, 107)",
   shadeColor: "",
-  darkCanvas: "rgb(25, 25, 25)",
-  mainCanvas: "rgb(40, 40, 40)",
-  shadeCanvas: "rgb(61, 61, 61)",
+  darkCanvas: "rgba(25, 25, 25, 1)",
+  mainCanvas: "rgba(40, 40, 40, 1)",
+  shadeCanvas: "rgba(61, 61, 61, 1)",
   textMain: "#b2b6bd",
   textDark: "#222222",
   mainFont: "'Merriweather', 'roboto', sans-serif",
