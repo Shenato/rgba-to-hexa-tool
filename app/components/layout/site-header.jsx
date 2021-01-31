@@ -7,14 +7,15 @@ const StyledHeader = styled.div`
   align-items: center;
   text-align: center;
   padding: 1rem;
+  font-family: ${({ theme }) => theme.secondaryFont};
 `;
 
 const SiteHeader = ({}) => {
   return (
     <StyledHeader>
-      <h1>RGBA to HEXA Converter</h1>
+      <h1>RGBA TO HEXA CONVERTER</h1>
       <div className="subtitle">
-        HEXA is an 8 digit transparency adjusted HEX
+        HEXA is an 8-digit transparency adjusted HEX
       </div>
     </StyledHeader>
   );

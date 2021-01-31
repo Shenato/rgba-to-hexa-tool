@@ -16,7 +16,7 @@ export default createGlobalStyle`
     font-size: 16px;
     font-family: ${({ theme }) => theme.mainFont};
     color: ${({ theme }) => theme.textMain};
-    background: ${({ theme }) => theme.mainCanvas};
+    background: ${({ theme }) => theme.mainBackground};
     font-feature-settings: 'kern', 'liga', 'clig', 'calt';
   }
   h1 {

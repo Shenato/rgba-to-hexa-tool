@@ -5,6 +5,7 @@ const theme = {
   mainCanvas: "rgb(40, 40, 40)",
   shadeCanvas: "rgb(61, 61, 61)",
   textMain: "#b2b6bd",
+  textDark: "#222222",
   mainFont: "'Merriweather', 'roboto', sans-serif",
   secondaryFont: "'Montserrat', 'roboto', sans-serif",
   whiteOpacity: "rgba(200, 200, 200, 0.25)",

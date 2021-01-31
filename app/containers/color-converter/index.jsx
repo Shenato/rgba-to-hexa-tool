@@ -1,25 +1,38 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { RGBAStringToArray, rgbaToHexa } from "Utils/colors";
+import Input from "Components/input";
+import React, { useContext, useEffect, useState } from "react";
+import styled, { createGlobalStyle, ThemeContext } from "styled-components";
+import {
+  RGBAStringToArray,
+  rgbaToHexa,
+  getCorrectTextColor,
+} from "Utils/colors";
 
 const Wrapper = styled.div`
   min-width: 300px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   flex-wrap: wrap;
   margin-top: 20%;
-  background: ${({ theme }) => theme.shadeCanvas};
+
   width: 100%;
   padding: 2rem 0.5rem;
 `;
-const Vertical = styled.div`
-  display: flex;
-  flex-direction: column;
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: ${({ background }) => background};
+    color: ${({ background }) => getCorrectTextColor(background)};
+  }
 `;
-const ColorConverter = ({}) => {
-  const [rgbValue, setrgbValue] = useState("rgba(0,0,0,0)");
-  const [hexaValue, sethexaValue] = useState("#00000000");
+
+const ColorConverter = ({ setMainBackground }) => {
+  const themeContext = useContext(ThemeContext);
+  const initialBackground = themeContext.mainCanvas;
+  const [rgbValue, setrgbValue] = useState(initialBackground);
+  const [hexaValue, sethexaValue] = useState(rgbaToHexa(initialBackground));
+
   const convert = () => {
     const colorValuesArray = RGBAStringToArray(rgbValue);
     console.log(colorValuesArray);
@@ -29,32 +42,31 @@ const ColorConverter = ({}) => {
     const hex = rgbaToHexa(colorValuesArray);
     sethexaValue(hex);
   };
+
+  useEffect(() => {
+    convert();
+  }, [rgbValue]);
+  useEffect(() => {
+    setMainBackground(hexaValue);
+  }, [hexaValue]);
   return (
-    <Wrapper>
-      <Vertical>
-        <label>RGBA</label>
-        <input
-          value={rgbValue}
-          onChange={(e) => {
-            setrgbValue(e.target.value);
-          }}
-          onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              convert();
-            }
-          }}
-        />
-      </Vertical>
-      <Vertical>
-        <label>HEXA</label>
-        <input
-          value={hexaValue}
-          onChange={(e) => {
-            sethexaValue();
-          }}
-        />
-      </Vertical>
-      <button onClick={convert}>Convert</button>
+    <Wrapper background={hexaValue}>
+      <Input
+        label="RGBA"
+        value={rgbValue}
+        onChange={(e) => {
+          setrgbValue(e.target.value);
+        }}
+      />
+      <span>TO</span>
+      <Input
+        label="HEXA"
+        value={hexaValue}
+        onChange={(e) => {
+          sethexaValue();
+        }}
+      />
+      <GlobalStyle background={hexaValue} />
     </Wrapper>
   );
 };

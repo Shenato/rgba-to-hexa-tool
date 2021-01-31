@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { Router, Route, Switch, Link } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -14,16 +14,24 @@ import "./styles/main";
 import AppLayout from "Components/layout/layout";
 import ColorConverter from "Containers/color-converter";
 import SiteHeader from "Components/layout/site-header";
+import { getCorrectTextColor } from "Utils/colors";
 
 export default function app() {
+  const [mainBackground, setMainBackground] = useState(theme.darkCanvas);
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider
+        theme={{
+          ...theme,
+          mainBackground,
+          textMain: mainBackground && getCorrectTextColor(mainBackground),
+        }}
+      >
         <Router history={history}>
           <GlobalStyle />
           <AppLayout>
             <SiteHeader />
-            <ColorConverter />
+            <ColorConverter setMainBackground={setMainBackground} />
           </AppLayout>
         </Router>
       </ThemeProvider>
