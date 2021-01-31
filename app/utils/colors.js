@@ -1,4 +1,5 @@
 import theme from 'Styles/vars';
+import { precisionRound } from './number';
 
 export const RGBAStringToArray = (rgbaString = 'rgba(0,0,0,0)') => {
   if (!rgbaString.match(/(rgba\(.*?\))|(rgb\(.*?\))/)) {
@@ -11,6 +12,14 @@ export const RGBAStringToArray = (rgbaString = 'rgba(0,0,0,0)') => {
   }
   return colorValues;
 };
+
+export function hexaToRgba(hexString) {
+  const [hRed, hGreen, hBlue, hAlpha] = hexToColorComponents(hexString);
+  if (hAlpha) {
+    return `rgba(${hRed}, ${hGreen}, ${hBlue}, ${hAlpha})`;
+  }
+  return `rgb(${hRed}, ${hGreen}, ${hBlue})`;
+}
 
 export function rgbaToHexa([r, g, b, a]) {
   const red = componentToHex(r);
@@ -53,6 +62,18 @@ export function getCorrectTextColor(hex) {
 
   const threshold = 130; /* about half of 256. Lower threshold equals more dark text on dark background  */
 
+  const [hRed, hGreen, hBlue, hAlpha] = hexToColorComponents(hex);
+
+  const cBrightness = (hRed * 299 + hGreen * 587 + hBlue * 114) / 1000;
+  if (cBrightness > threshold || hAlpha < 0.8) {
+    lastResult = theme.textDark;
+    return theme.textDark;
+  } else {
+    lastResult = theme.textMain;
+    return theme.textMain;
+  }
+}
+function hexToColorComponents(hex) {
   const hRed = hexToR(hex);
   const hGreen = hexToG(hex);
   const hBlue = hexToB(hex);
@@ -68,18 +89,10 @@ export function getCorrectTextColor(hex) {
     return parseInt(cutHex(h).substring(4, 6), 16);
   }
   function hexToA(h) {
-    return parseInt(cutHex(h).substring(6, 8), 16);
+    return precisionRound(parseInt(cutHex(h).substring(6, 8), 16) / 255, 2);
   }
   function cutHex(h) {
     return h.charAt(0) == '#' ? h.substring(1, 9) : h;
   }
-
-  const cBrightness = (hRed * 299 + hGreen * 587 + hBlue * 114) / 1000;
-  if (cBrightness > threshold || hAlpha < 0.8 * 255) {
-    lastResult = theme.textDark;
-    return theme.textDark;
-  } else {
-    lastResult = theme.textMain;
-    return theme.textMain;
-  }
+  return [hRed, hGreen, hBlue, hAlpha];
 }
