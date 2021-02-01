@@ -15,7 +15,7 @@ const SiteHeader = ({}) => {
     <StyledHeader>
       <h1>RGBA TO HEXA CONVERTER</h1>
       <div className="subtitle">
-        HEXA is an 8-digit transparency adjusted HEX
+        HEXA is an 8-digit transparency adjusted HEX code
       </div>
     </StyledHeader>
   );
