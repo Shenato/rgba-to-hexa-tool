@@ -1,4 +1,5 @@
 import theme from "Styles/vars";
+import { contrast } from "./contrast";
 import { precisionRound } from "./number";
 
 export const validateHEX = (hexString) =>
@@ -11,7 +12,7 @@ export function convertRGB(rgbValue) {
   if (!validateRGB(rgbValue)) {
     return;
   }
-  const colorValuesArray = RGBAStringToArray(rgbValue);
+  const colorValuesArray = RGBAToColorComponents(rgbValue);
   if (!colorValuesArray || colorValuesArray.length < 3) {
     return;
   }
@@ -33,18 +34,6 @@ export function hexaToRgba(hexString) {
     return `rgba(${hRed}, ${hGreen}, ${hBlue}, ${hAlpha})`;
   }
   return `rgb(${hRed}, ${hGreen}, ${hBlue})`;
-}
-
-export function RGBAStringToArray(rgbaString = "rgba(0,0,0,0)") {
-  if (!validateRGB(rgbaString)) {
-    console.error("not a RGBA string");
-    return;
-  }
-  const colorValues = rgbaString.match(/[.?\d]+/g);
-  if (colorValues?.some((c) => Number.isNaN(c))) {
-    return;
-  }
-  return colorValues;
 }
 
 export function rgbaToHexa([r, g, b, a]) {
@@ -70,26 +59,22 @@ function componentToHex(c) {
 }
 
 let lastResult;
-/*
-From this W3C document: http://www.webmasterworld.com/r.cgi?f=88&d=9769&url=http://www.w3.org/TR/AERT#color-contrast
 
-Color brightness is determined by the following formula: 
-((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000
-
-I know this could be more compact, but I think this is easier to read/explain.
-
-*/
 export function getCorrectTextColor(hex) {
   if (!hex) {
     return lastResult;
   }
 
-  const threshold = 130; /* about half of 256. Lower threshold equals more dark text on dark background  */
-
   const [hRed, hGreen, hBlue, hAlpha] = hexToColorComponents(hex);
 
-  const cBrightness = (hRed * 299 + hGreen * 587 + hBlue * 114) / 1000;
-  if (cBrightness > threshold || hAlpha < 0.8) {
+  const textDarkRGBA = hexToColorComponents(theme.textDark);
+  const textLightRGBA = hexToColorComponents(theme.textLight);
+  const textDarkRGB = textDarkRGBA.slice(0, 3);
+  const textLightRGB = textLightRGBA.slice(0, 3);
+  const contrastLight = contrast(textLightRGB, [hRed, hGreen, hBlue]);
+  const contrastDark = contrast(textDarkRGB, [hRed, hGreen, hBlue]);
+
+  if (contrastDark > contrastLight || hAlpha < 0.8) {
     lastResult = theme.textDark;
     return theme.textDark;
   } else {
@@ -125,4 +110,16 @@ function hexToColorComponents(hex) {
     return h.charAt(0) == "#" ? h.substring(1, 9) : h;
   }
   return [hRed, hGreen, hBlue, hAlpha];
+}
+
+export function RGBAToColorComponents(rgbaString) {
+  if (!validateRGB(rgbaString)) {
+    console.error("not a RGBA string");
+    return;
+  }
+  const colorValues = rgbaString.match(/[.?\d]+/g);
+  if (colorValues?.some((c) => Number.isNaN(c))) {
+    return;
+  }
+  return colorValues;
 }
