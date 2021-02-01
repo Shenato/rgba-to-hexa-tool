@@ -93,8 +93,8 @@ export function getCorrectTextColor(hex) {
     lastResult = theme.textDark;
     return theme.textDark;
   } else {
-    lastResult = theme.textMain;
-    return theme.textMain;
+    lastResult = theme.textLight;
+    return theme.textLight;
   }
 }
 function hexToColorComponents(hex) {

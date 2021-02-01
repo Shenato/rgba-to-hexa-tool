@@ -21,8 +21,8 @@ const Wrapper = styled.div`
 const ColorConverter = ({ setMainBackground }) => {
   const themeContext = useContext(ThemeContext);
   const initialBackground = themeContext.mainCanvas;
-  const [rgbValue, setrgbValue] = useState(initialBackground);
-  const [hexaValue, sethexaValue] = useState(convertRGB(initialBackground));
+  const [rgbValue, setrgbValue] = useState(convertHEXA(initialBackground));
+  const [hexaValue, sethexaValue] = useState(initialBackground);
 
   useEffect(() => {
     if (!validateHEX(hexaValue)) {

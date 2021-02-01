@@ -17,7 +17,7 @@ import SiteHeader from "Components/layout/site-header";
 import { getCorrectTextColor } from "Utils/colors";
 
 export default function app() {
-  const [mainBackground, setMainBackground] = useState(theme.darkCanvas);
+  const [mainBackground, setMainBackground] = useState(theme.mainCanvas);
   return (
     <Provider store={store}>
       <ThemeProvider
