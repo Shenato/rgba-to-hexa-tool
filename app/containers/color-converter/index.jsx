@@ -1,7 +1,9 @@
-import Input from 'Components/input';
-import React, { useContext, useEffect, useState } from 'react';
-import styled, { createGlobalStyle, ThemeContext } from 'styled-components';
-import { RGBAStringToArray, rgbaToHexa, getCorrectTextColor, hexaToRgba } from 'Utils/colors';
+import React, { useContext, useEffect, useState } from "react";
+import styled, { ThemeContext } from "styled-components";
+
+import Input from "Components/input";
+
+import { convertRGB, convertHEXA, validateHEX } from "Utils/colors";
 
 const Wrapper = styled.div`
   min-width: 300px;
@@ -21,24 +23,17 @@ const ColorConverter = ({ setMainBackground }) => {
   const initialBackground = themeContext.mainCanvas;
   const [rgbValue, setrgbValue] = useState(initialBackground);
   const [hexaValue, sethexaValue] = useState(convertRGB(initialBackground));
+
   useEffect(() => {
-    setMainBackground(hexaValue);
-  }, [hexaValue]);
-  function convertRGB(rgbValue) {
-    const colorValuesArray = RGBAStringToArray(rgbValue);
-    console.log(colorValuesArray);
-    if (!colorValuesArray || colorValuesArray.length < 3) {
+    if (!validateHEX(hexaValue)) {
       return;
     }
-    const hex = rgbaToHexa(colorValuesArray);
-    return hex;
-  }
 
-  const convertHEXA = (hexaValue) => {
-    const rgbaString = hexaToRgba(hexaValue);
-    console.log(rgbaString);
-    return rgbaString;
-  };
+    const timeout = setTimeout(() => {
+      setMainBackground(hexaValue);
+    }, 200);
+    return () => clearTimeout(timeout);
+  }, [hexaValue]);
 
   const onChangeRGBA = (e) => {
     setrgbValue(e.target.value);
@@ -63,4 +58,5 @@ const ColorConverter = ({ setMainBackground }) => {
     </Wrapper>
   );
 };
+
 export default ColorConverter;

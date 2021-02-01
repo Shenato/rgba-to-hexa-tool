@@ -1,16 +1,30 @@
-import theme from 'Styles/vars';
-import { precisionRound } from './number';
+import theme from "Styles/vars";
+import { precisionRound } from "./number";
 
-export const RGBAStringToArray = (rgbaString = 'rgba(0,0,0,0)') => {
-  if (!rgbaString.match(/(rgba\(.*?\))|(rgb\(.*?\))/)) {
-    console.error('not a RGBA string');
+export const validateHEX = (hexString) =>
+  hexString.match(/^#[0-9a-fA-F]{8}$|#[0-9a-fA-F]{6}$|#[0-9a-fA-F]{3}$/);
+
+export const validateRGB = (rgbString) =>
+  rgbString.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/);
+
+export function convertRGB(rgbValue) {
+  if (!validateRGB(rgbValue)) {
     return;
   }
-  const colorValues = rgbaString.match(/[.?\d]+/g);
-  if (colorValues?.some((c) => Number.isNaN(c))) {
+  const colorValuesArray = RGBAStringToArray(rgbValue);
+  if (!colorValuesArray || colorValuesArray.length < 3) {
     return;
   }
-  return colorValues;
+  const hex = rgbaToHexa(colorValuesArray);
+  return hex;
+}
+
+export const convertHEXA = (hexaValue) => {
+  if (!validateHEX(hexaValue)) {
+    return;
+  }
+  const rgbaString = hexaToRgba(hexaValue);
+  return rgbaString;
 };
 
 export function hexaToRgba(hexString) {
@@ -21,19 +35,29 @@ export function hexaToRgba(hexString) {
   return `rgb(${hRed}, ${hGreen}, ${hBlue})`;
 }
 
+export function RGBAStringToArray(rgbaString = "rgba(0,0,0,0)") {
+  if (!validateRGB(rgbaString)) {
+    console.error("not a RGBA string");
+    return;
+  }
+  const colorValues = rgbaString.match(/[.?\d]+/g);
+  if (colorValues?.some((c) => Number.isNaN(c))) {
+    return;
+  }
+  return colorValues;
+}
+
 export function rgbaToHexa([r, g, b, a]) {
   const red = componentToHex(r);
   const green = componentToHex(g);
   const blue = componentToHex(b);
   const alpha = a && alphaToHex(a);
-  console.log([red, green, blue, alpha]);
-  return `#${red}${green}${blue}${alpha || ''}`;
+  return `#${red}${green}${blue}${alpha || ""}`;
 }
 
 function alphaToHex(value) {
   value = Math.round(value * 100) / 100;
   const alpha = Math.min(Math.round(value * 255), 255);
-  console.log('alpha', alpha);
   const hex = (alpha + 0x10000).toString(16).substr(-2).toUpperCase();
   // const perc = Math.round(value * 100);
 
@@ -41,24 +65,24 @@ function alphaToHex(value) {
 }
 function componentToHex(c) {
   const hex = parseInt(c).toString(16);
-  const returnValue = hex.length == 1 ? '0' + hex : hex;
+  const returnValue = hex.length == 1 ? "0" + hex : hex;
   return returnValue.toUpperCase();
 }
 
 let lastResult;
+/*
+From this W3C document: http://www.webmasterworld.com/r.cgi?f=88&d=9769&url=http://www.w3.org/TR/AERT#color-contrast
+
+Color brightness is determined by the following formula: 
+((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000
+
+I know this could be more compact, but I think this is easier to read/explain.
+
+*/
 export function getCorrectTextColor(hex) {
   if (!hex) {
     return lastResult;
   }
-  /*
-  From this W3C document: http://www.webmasterworld.com/r.cgi?f=88&d=9769&url=http://www.w3.org/TR/AERT#color-contrast
-  
-  Color brightness is determined by the following formula: 
-  ((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000
-  
-  I know this could be more compact, but I think this is easier to read/explain.
-  
-  */
 
   const threshold = 130; /* about half of 256. Lower threshold equals more dark text on dark background  */
 
@@ -74,6 +98,12 @@ export function getCorrectTextColor(hex) {
   }
 }
 function hexToColorComponents(hex) {
+  if (hex.match(/#[0-9a-fA-F]{3}$/)) {
+    hex = cutHex(hex)
+      .split()
+      .map((c) => c.repeat(2))
+      .join("");
+  }
   const hRed = hexToR(hex);
   const hGreen = hexToG(hex);
   const hBlue = hexToB(hex);
@@ -92,7 +122,7 @@ function hexToColorComponents(hex) {
     return precisionRound(parseInt(cutHex(h).substring(6, 8), 16) / 255, 2);
   }
   function cutHex(h) {
-    return h.charAt(0) == '#' ? h.substring(1, 9) : h;
+    return h.charAt(0) == "#" ? h.substring(1, 9) : h;
   }
   return [hRed, hGreen, hBlue, hAlpha];
 }
