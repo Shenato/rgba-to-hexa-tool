@@ -14,7 +14,7 @@ import "./styles/main";
 import AppLayout from "Components/layout/layout";
 import ColorConverter from "Containers/color-converter";
 import SiteHeader from "Components/layout/site-header";
-import { getCorrectTextColor } from "Utils/colors";
+import { getBestContrastColor } from "Utils/colors";
 
 export default function app() {
   const [mainBackground, setMainBackground] = useState(theme.mainCanvas);
@@ -24,7 +24,12 @@ export default function app() {
         theme={{
           ...theme,
           mainBackground,
-          textMain: mainBackground && getCorrectTextColor(mainBackground),
+          textMain:
+            mainBackground &&
+            getBestContrastColor({
+              backgroundHex: mainBackground,
+              textColors: [theme.textLight, theme.textDark],
+            }),
         }}
       >
         <Router history={history}>

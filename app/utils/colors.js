@@ -1,5 +1,4 @@
-import theme from "Styles/vars";
-import { contrast } from "./contrast";
+import { contrast, luminance } from "./contrast";
 import { precisionRound } from "./number";
 
 export const validateHEX = (hexString) =>
@@ -60,27 +59,33 @@ function componentToHex(c) {
 
 let lastResult;
 
-export function getCorrectTextColor(hex) {
-  if (!hex) {
+export function getBestContrastColor({ backgroundHex, textColors }) {
+  if (!backgroundHex) {
     return lastResult;
   }
 
-  const [hRed, hGreen, hBlue, hAlpha] = hexToColorComponents(hex);
+  const [hRed, hGreen, hBlue, hAlpha] = hexToColorComponents(backgroundHex);
 
-  const textDarkRGBA = hexToColorComponents(theme.textDark);
-  const textLightRGBA = hexToColorComponents(theme.textLight);
-  const textDarkRGB = textDarkRGBA.slice(0, 3);
-  const textLightRGB = textLightRGBA.slice(0, 3);
-  const contrastLight = contrast(textLightRGB, [hRed, hGreen, hBlue]);
-  const contrastDark = contrast(textDarkRGB, [hRed, hGreen, hBlue]);
+  const { color: highestContrastColor } = textColors.reduce(
+    (colorCombo, color) => {
+      const RGBA = hexToColorComponents(color);
+      const RGB = RGBA.slice(0, 3);
+      const colorContrast = contrast(RGB, [hRed, hGreen, hBlue]);
+      const luminosity = luminance(...RGB);
+      if (hAlpha < 0.8) {
+        return colorCombo.luminosity && colorCombo.luminosity < luminosity
+          ? colorCombo
+          : { color, contrast: colorContrast, luminosity };
+      }
+      return colorCombo.contrast && colorCombo.contrast > colorContrast
+        ? colorCombo
+        : { color, contrast: colorContrast, luminosity };
+    },
+    { color: null, contrast: null, luminosity: null }
+  );
 
-  if (contrastDark > contrastLight || hAlpha < 0.8) {
-    lastResult = theme.textDark;
-    return theme.textDark;
-  } else {
-    lastResult = theme.textLight;
-    return theme.textLight;
-  }
+  lastResult = highestContrastColor;
+  return highestContrastColor;
 }
 function hexToColorComponents(hex) {
   if (hex.match(/#[0-9a-fA-F]{3}$/)) {
