@@ -16,10 +16,10 @@ Transparency adjusted hex codes #RRGGBBAA allows you to attach alpha values next
 
 ```js
 const styleGuide = {
-  hexColor: #013370
-}
+  hexColor: '#013370',
+};
 
-`${styleGuide.hexColor}80` // #01337080 which is equal to rgba(1, 51, 112, 0.5)
+`${styleGuide.hexColor}80`; // #01337080 which is equal to rgba(1, 51, 112, 0.5)
 ```
 
 You see it's easier to from #013370 to #01337080 than it is to go from rgba(1, 51, 112) to rgba(1, 51, 112, 0.5) therefore transparency adjusted hex can be very convenient and superior to rgba
@@ -28,12 +28,12 @@ This approach works very well with CSS-in-JS libraries like `styled-components`
 
 ```js
 const theme = {
-  backgroundColorInHex: #013370
-}
+  backgroundColorInHex: '#013370',
+};
 
-// Wanting to use a theme color but with 0.25 opacity
+// Using a theme color but with 0.25 opacity
 
 const Background = styled.div`
-  background: ${({ theme }) => `${theme.backgroundColorInHex}40`}
+  background: ${({ theme }) => `${theme.backgroundColorInHex}40`};
 `;
 ```
