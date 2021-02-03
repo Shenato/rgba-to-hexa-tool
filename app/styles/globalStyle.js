@@ -1,8 +1,8 @@
-const { createGlobalStyle } = require("styled-components");
+const { createGlobalStyle } = require('styled-components');
 
 export default createGlobalStyle`
   * {
-    box-sizing: border-box;
+    box-sizing: border-box !important;
   }
   html, body {
     height: 100vh;
@@ -15,6 +15,7 @@ export default createGlobalStyle`
   body {
     font-size: 16px;
     font-family: ${({ theme }) => theme.mainFont};
+    font-weight: 400;
     color: ${({ theme }) => theme.textMain};
     background: ${({ theme }) => theme.mainBackground};
     font-feature-settings: 'kern', 'liga', 'clig', 'calt';
@@ -39,6 +40,14 @@ export default createGlobalStyle`
   h6 {
     font-size: .75rem !important;
   }
+  p {
+    font-size: 1em;
+  }
+  a {
+    text-decoration: none;
+    font-weight: bold;
+    color: ${({ theme }) => theme.textMain};
 
+  }
   
 `;
