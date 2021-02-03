@@ -19,7 +19,7 @@ const styleGuide = {
   hexColor: #013370
 }
 
-const halfTransparentVersionOfColor = `${styleGuide.hexColor}80` // #01337080 which is equal to rgba(1, 51, 112, 0.5)
+`${styleGuide.hexColor}80` // #01337080 which is equal to rgba(1, 51, 112, 0.5)
 ```
 
 You see it's easier to from #013370 to #01337080 than it is to go from rgba(1, 51, 112) to rgba(1, 51, 112, 0.5) therefore transparency adjusted hex can be very convenient and superior to rgba
