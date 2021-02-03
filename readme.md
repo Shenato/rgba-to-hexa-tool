@@ -8,7 +8,7 @@ This is an [online tool](https://rgbatohexa.shenato.com/) Hex alpha or HEXA as i
 
 ## What does this project do?
 
-It's an online tool to convert between rgba (and rgb) to hex code and vice versa, **while maintaining the opacity value through the conversion**, I haven't found many color conversion tools out there
+It's an online tool to convert between rgba (and rgb) to hex code and vice versa, **while maintaining the opacity value through the conversion**, I haven't found many color conversion tools out that maintain transparency while converting from rgba to hex, if they supported converting from 8 digit hex at all.
 
 ## Why do i care about transparent hex codes, can't i just use rgba?
 
