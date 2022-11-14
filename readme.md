@@ -2,7 +2,8 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/30757ade-981c-427c-8675-bd9705ffa18e/deploy-status)](https://app.netlify.com/sites/rgbatohexa/deploys)
 
-This is an [online tool](https://rgbatohexa.shenato.com/)
+This is an [conversion tool website](https://rgbatohexa.shenato.com/) that converts between rgba and hexa
+
 Hex alpha or HEXA as i like to call it, is an 8 digit hex code with transparency value #RRGGBBAA
 
 ## [Take me to the live project](https://rgbatohexa.shenato.com/)
